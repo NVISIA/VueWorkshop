@@ -16,6 +16,9 @@
               </div>
               <p>Description: {{description}} </p>
               <div class="availableTimes">
+                <a :href="'#restaurant/' + id" :name="'restaurant-' + id"
+                  class="button restaurantRow" style="color: white;">Show Times
+                </a>
               </div>
               <div class="reservationForm"></div>
           </div>
