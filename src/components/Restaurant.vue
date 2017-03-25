@@ -29,17 +29,15 @@
 <script>
 export default {
   name: 'restaurant',
-  data () {
-    return {
-      name: 'Test Restaurant',
-      tagline: 'The Testaurant',
-      price: 2,
-      rating: 1,
-      address: '123 Test Street',
-      description: 'Foo Mae Padme Hum',
-      id: 1
-    }
-  }
+  props: [
+    'name',
+    'tagline',
+    'price',
+    'rating',
+    'address',
+    'description',
+    'id'
+  ]
 }
 </script>
 
