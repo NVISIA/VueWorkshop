@@ -1,6 +1,6 @@
 <template>
   <div class="restaurantList">
-    <div is="restaurant"
+    <restaurant
       v-for="restaurant in restaurants"
       :key="restaurant.id"
       :name="restaurant.name"
@@ -9,15 +9,16 @@
       :rating="restaurant.rating"
       :address="restaurant.address"
       :description="restaurant.description"
-      :id="restaurant.id"></div>
+      :id="restaurant.id"></restaurant>
   </div>
 </template>
 
 <script>
-import Restaurant from './Restaurant'
+import Restaurant from './Restaurant.vue'
 
 export default {
   name: 'restaurantList',
+  components: { Restaurant },
   data () {
     return {
       restaurants: [{
@@ -26,15 +27,11 @@ export default {
         price: 2,
         rating: 1,
         address: '123 Test Street',
-        description: 'Foo Mae Padme Hum',
+        description: 'Foo Mane Padme Hum: Our first obligation is to keep the foo counters turning.',
         id: 1
       }]
     }
-  },
-
-  components: [
-    Restaurant
-  ]
+  }
 }
 </script>
 
