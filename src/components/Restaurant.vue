@@ -23,8 +23,8 @@
                 <available-times-list v-else :availableTimes="availableTimes"
                   @selectTime="selectTime"></available-times-list>
               </div>
-              <reservation-form v-if="selectedTime" :selectedTime="selectedTime"
-                @hideForm="hideForm"></reservation-form>
+              <reservation-form v-if="selectedTime" :time="selectedTime"
+                :restaurantId="id" @hideForm="hideForm"></reservation-form>
           </div>
       </div>
     </div>

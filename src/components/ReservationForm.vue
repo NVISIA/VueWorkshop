@@ -5,7 +5,7 @@
               <form v-on:submit.prevent="reserveRestaurant">
                   <div class="row">
                       <div class="large-6 columns">
-                          <h5><label>Selected Time:</label>{{ showTime(selectedTime) }}</h5>
+                          <h5><label>Selected Time:</label>{{ showTime(time) }}</h5>
                       </div>
                       <div class="large-6 columns">
                           <label>Number of Guests</label>
@@ -78,7 +78,6 @@ export default {
   data () {
     return {
       showTime: showTime,
-      time: this.selectedTime,
       guests: 1,
       name: '',
       phone: '',
@@ -89,23 +88,42 @@ export default {
     }
   },
   props: [
-    'selectedTime'
+    'time',
+    'restaurantId'
   ],
   methods: {
     hideForm (event) {
       this.$emit('hideForm')
     },
     reserveRestaurant (event) {
-      console.log(
-        'time:', this.time,
-        'guests:', this.guests,
-        'name:', this.name,
-        'phone:', this.phone,
-        'email:', this.email,
-        'location:', this.location,
-        'isSpecialOccasion:', this.isSpecialOccasion,
-        'specialRequests:', this.specialRequests
-      )
+      let reservationData = {
+        time: this.time,
+        restaurantId: this.restaurantId,
+        guests: this.guests,
+        name: this.name,
+        phone: this.phone,
+        email: this.email,
+        location: this.location,
+        isSpecialOccasion: this.isSpecialOccasion,
+        specialRequests: this.specialRequests
+      }
+
+      console.log(reservationData)
+
+      let myHeaders = new Headers()
+      myHeaders.append('Content-Type', 'application/json')
+
+      return fetch('/reservations', {
+        method: 'POST',
+        body: JSON.stringify(reservationData),
+        headers: myHeaders
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(response.status + ' ' + response.statusText)
+        }
+
+        return response.ok
+      })
     }
   }
 }
