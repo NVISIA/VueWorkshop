@@ -23,7 +23,8 @@
                 <available-times-list v-else :availableTimes="availableTimes"
                   @selectTime="selectTime"></available-times-list>
               </div>
-              <reservation-form v-if="selectedTime" :time="selectedTime"></reservation-form>
+              <reservation-form v-if="selectedTime" :selectedTime="selectedTime"
+                @hideForm="hideForm"></reservation-form>
           </div>
       </div>
     </div>
@@ -97,6 +98,9 @@ export default {
     },
     selectTime (time) {
       this.selectedTime = time
+    },
+    hideForm (event) {
+      this.selectedTime = null
     }
   }
 }

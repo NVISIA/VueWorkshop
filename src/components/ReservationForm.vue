@@ -2,10 +2,10 @@
   <div class="row">
       <div class="large-12 columns">
           <div class="panel">
-              <form>
+              <form v-on:submit.prevent="reserveRestaurant">
                   <div class="row">
                       <div class="large-6 columns">
-                          <h5><label>Selected Time:</label>{{ showTime(time) }}</h5>
+                          <h5><label>Selected Time:</label>{{ showTime(selectedTime) }}</h5>
                       </div>
                       <div class="large-6 columns">
                           <label>Number of Guests</label>
@@ -52,13 +52,13 @@
                   <div class="row">
                       <div class="large-12 columns">
                           <label>Special Requests:</label>
-                          <textarea name="specialRequests" placeholder="Enter any special requests here."></textarea>
+                          <textarea v-model="specialRequests" placeholder="Enter any special requests here."></textarea>
                       </div>
                   </div>
                   <div class="row">
                       <div class="small-12 medium-12 large-12 small-centered columns">
-                          <button class="small radius button submitButton">Make Reservation</button>
-                          <button class="small radius secondary button cancelButton">Cancel</button>
+                          <button type="submit" class="small radius button submitButton">Make Reservation</button>
+                          <button type="reset" @click="hideForm" class="small radius secondary button cancelButton">Cancel</button>
                       </div>
                   </div>
               </form>
@@ -77,12 +77,37 @@ export default {
   name: 'reservation-form',
   data () {
     return {
-      showTime: showTime
+      showTime: showTime,
+      time: this.selectedTime,
+      guests: 1,
+      name: '',
+      phone: '',
+      email: '',
+      location: 'Red',
+      isSpecialOccasion: false,
+      specialRequests: ''
     }
   },
   props: [
-    'time'
-  ]
+    'selectedTime'
+  ],
+  methods: {
+    hideForm (event) {
+      this.$emit('hideForm')
+    },
+    reserveRestaurant (event) {
+      console.log(
+        'time:', this.time,
+        'guests:', this.guests,
+        'name:', this.name,
+        'phone:', this.phone,
+        'email:', this.email,
+        'location:', this.location,
+        'isSpecialOccasion:', this.isSpecialOccasion,
+        'specialRequests:', this.specialRequests
+      )
+    }
+  }
 }
 </script>
 
