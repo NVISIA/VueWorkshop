@@ -22,7 +22,7 @@
                 </a>
                 <available-times-list v-else :availableTimes="availableTimes"></available-times-list>
               </div>
-              <div class="reservationForm"></div>
+              <reservation-form v-if="selectedTime"></reservation-form>
           </div>
       </div>
     </div>
@@ -31,12 +31,14 @@
 
 <script>
 import AvailableTimesList from './AvailableTimesList.vue'
+import ReservationForm from './ReservationForm.vue'
 
 export default {
   name: 'restaurant',
   data () {
     return {
-      availableTimes: []
+      availableTimes: [],
+      selectedTime: null
     }
   },
   created () {
@@ -57,7 +59,10 @@ export default {
     'description',
     'id'
   ],
-  components: { AvailableTimesList },
+  components: {
+    AvailableTimesList,
+    ReservationForm
+  },
   methods: {
     fetchRestaurant (id) {
       return fetch('/restaurants/' + id).then((response) => {
