@@ -6,10 +6,10 @@
               <p><strong>{{name}}</strong><span v-if="tagline"><br/>{{tagline}}</span></p>
               <div class="row">
                   <div class="large-3 medium-6 small-12 columns">
-                      <p>Price: {{price}}</p>
+                      <p>Price: {{ formatPrice(price) }}</p>
                   </div>
                   <div class="large-3 medium-6 small-12 columns">
-                      <p>Rating: {{rating}}</p>
+                      <p>Rating: {{formatRating(rating) }}</p>
                   </div>
                   <div class="large-6 medium-12 small-12 columns">
                       <p>Address: {{address}}</p>
@@ -102,6 +102,34 @@ export default {
     },
     hideForm (event) {
       this.selectedTime = null
+    },
+    formatPrice (price) {
+      if (!price) {
+        return ''
+      }
+
+      price = parseInt(price)
+      let string = ''
+
+      for (let i = 0; i < price; i++) {
+        string += '$'
+      }
+
+      return string
+    },
+    formatRating (rating) {
+      if (!rating) {
+        return ''
+      }
+
+      rating = parseInt(rating)
+      let string = ''
+
+      for (let i = 0; i < rating; i += 25) {
+        string += '*'
+      }
+
+      return string
     }
   }
 }
