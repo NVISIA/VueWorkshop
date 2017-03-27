@@ -9,7 +9,7 @@
                       <p>Price: {{ formatPrice(price) }}</p>
                   </div>
                   <div class="large-3 medium-6 small-12 columns">
-                      <p>Rating: {{formatRating(rating) }}</p>
+                      <p>Rating: {{ formatRating(rating) }}</p>
                   </div>
                   <div class="large-6 medium-12 small-12 columns">
                       <p>Address: {{address}}</p>
