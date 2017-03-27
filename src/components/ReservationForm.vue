@@ -16,7 +16,6 @@
                             min="1" inputmode="numeric" required />
                       </div>
                   </div>
-
                   <div class="row" v-if="!success">
                       <div class="large-12 columns">
                           <label>Name:</label>
