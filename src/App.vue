@@ -24,7 +24,7 @@
               <h5>There is so much more!</h5>
 
               <p>This is but one example with Vue, there is so much more possible!</p>
-              <a href="https://vuejs.org" class="small button">Go to Backbone.js Docs</a>
+              <a href="https://vuejs.org" class="small button">Go to VueJS Docs</a>
           </div>
       </div>
     </div>

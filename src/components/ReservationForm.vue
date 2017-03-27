@@ -6,7 +6,10 @@
                   <div class="row">
                       <div class="large-6 columns">
                           <h5><label>Selected Time:</label>{{ showTime(time) }}</h5>
+                          <span class="success" v-if="success">Successfully reserved {{ restaurantName }} for {{ showTime(time) }}!</span>
                       </div>
+                  </div>
+                  <div class="row" v-if="!success">
                       <div class="large-6 columns">
                           <label>Number of Guests</label>
                           <input type="number" v-model="guests" placeholder="#"
@@ -14,7 +17,7 @@
                       </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row" v-if="!success">
                       <div class="large-12 columns">
                           <label>Name:</label>
                           <input type="text" v-model="name"
@@ -23,7 +26,7 @@
                             autocomplete="name" inputmode="verbatim" required />
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row" v-if="!success">
                       <div class="large-6 medium-6 columns">
                           <label>Phone:</label>
                           <input type="tel" v-model="phone"
@@ -37,7 +40,7 @@
                             placeholder="user@domain.ext" autocomplete="email" />
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row" v-if="!success">
                       <div class="large-8 medium-8 columns">
                           <label>Seating:</label>
                           <input type="radio" v-model="location" value="Red" id="noPreference"><label for="noPreference">No Preference</label>
@@ -49,21 +52,23 @@
                           <input id="specialOccasion" v-model="isSpecialOccasion" type="checkbox"><label for="specialOccasion">Special Occasion</label>
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row" v-if="!success">
                       <div class="large-12 columns">
                           <label>Special Requests:</label>
                           <textarea v-model="specialRequests" placeholder="Enter any special requests here."></textarea>
                       </div>
                   </div>
-                  <div class="row">
+                  <div class="row" v-if="!success">
                       <div class="small-12 medium-12 large-12 small-centered columns">
                           <button type="submit" class="small radius button submitButton">Make Reservation</button>
                           <button type="reset" @click="hideForm" class="small radius secondary button cancelButton">Cancel</button>
                       </div>
                   </div>
               </form>
-              <div class="error-box">
-                  <ul class="error-list"></ul>
+              <div class="error-box" v-if="errorList.length > 0">
+                  <ul class="error-list">
+                    <li v-for="error in errorList">{{ error.message }}</li>
+                  </ul>
               </div>
           </div>
       </div>
@@ -84,15 +89,26 @@ export default {
       email: '',
       location: 'Red',
       isSpecialOccasion: false,
-      specialRequests: ''
+      specialRequests: '',
+      success: false,
+      errorList: []
     }
   },
   props: [
     'time',
-    'restaurantId'
+    'restaurantId',
+    'restaurantName'
   ],
+  watch: {
+    time: function (newValue) {
+      this.success = false
+      this.errorList = []
+    }
+  },
   methods: {
     hideForm (event) {
+      this.success = false
+      this.errorList = []
       this.$emit('hideForm')
     },
     reserveRestaurant (event) {
@@ -119,9 +135,12 @@ export default {
         headers: myHeaders
       }).then((response) => {
         if (!response.ok) {
-          throw new Error(response.status + ' ' + response.statusText)
+          let myError = new Error(response.status + ' ' + response.statusText)
+          this.errorList.push(myError)
+          throw myError
         }
 
+        this.success = true
         return response.ok
       })
     }
@@ -132,5 +151,9 @@ export default {
 <style>
 #reservation-form {
 
+}
+
+.success {
+  color: green;
 }
 </style>
