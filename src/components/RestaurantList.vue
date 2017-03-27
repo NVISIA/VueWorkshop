@@ -19,17 +19,26 @@ import Restaurant from './Restaurant.vue'
 export default {
   name: 'restaurantList',
   components: { Restaurant },
+  created () {
+    this.fetchRestaurants()
+  },
+  methods: {
+    fetchRestaurants () {
+      return fetch('/restaurants').then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+
+        throw new Error(response.status + ' ' + response.statusText)
+      }).then((json) => {
+        const restaurants = json
+        this.restaurants = restaurants
+      })
+    }
+  },
   data () {
     return {
-      restaurants: [{
-        name: 'Test Restaurant',
-        tagline: 'The Testaurant',
-        price: 2,
-        rating: 1,
-        address: '123 Test Street',
-        description: 'Foo Mane Padme Hum: Our first obligation is to keep the foo counters turning.',
-        id: 1
-      }]
+      restaurants: []
     }
   }
 }

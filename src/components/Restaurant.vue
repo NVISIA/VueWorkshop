@@ -1,5 +1,6 @@
 <template>
-  <div id="restaurant" class="row">
+  <div id="restaurant">
+    <div class="row">
       <div class="large-12 columns">
           <div class="callout panel">
               <p><strong>{{name}}</strong><span v-if="tagline"><br/>{{tagline}}</span></p>
@@ -24,6 +25,7 @@
               <div class="reservationForm"></div>
           </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
     }
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': ['fetchRestaurant', 'fetchReservations']
   },
   props: [
     'name',
@@ -57,6 +59,24 @@ export default {
   ],
   components: { AvailableTimesList },
   methods: {
+    fetchRestaurant (id) {
+      return fetch('/restaurants/' + id).then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+
+        throw new Error(response.status + ' ' + response.statusText)
+      }).then((json) => {
+        const restaurant = json
+        this.name = restaurant.name
+        this.tagline = restaurant.tagline
+        this.price = restaurant.price
+        this.rating = restaurant.rating
+        this.address = restaurant.address
+        this.description = restaurant.description
+        this.id = restaurant.id
+      })
+    },
     fetchReservations (id) {
       return fetch('/restaurants/' + id + '/reservations').then((response) => {
         if (response.ok) {
