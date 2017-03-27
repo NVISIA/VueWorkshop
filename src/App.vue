@@ -13,7 +13,20 @@
         </div>
     </div>
     <div class="row">
-      <router-view></router-view>
+      <router-view class="large-8 medium-8 columns"></router-view>
+      <div class="large-4 medium-4 columns">
+          <div class="panel">
+              <h5>Welcome Back!</h5>
+
+              <a href="/logout" class="small button">Logout</a>
+          </div>
+          <div class="panel">
+              <h5>There is so much more!</h5>
+
+              <p>This is but one example with Backbone, there is so much more possible!</p>
+              <a href="http://backbonejs.org/#Events" class="small button">Go to Backbone.js Docs</a>
+          </div>
+      </div>      
     </div>
   </div>
 </template>
