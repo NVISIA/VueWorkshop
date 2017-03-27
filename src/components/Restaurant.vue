@@ -17,8 +17,9 @@
               <p>Description: {{description}} </p>
               <div class="availableTimes">
                 <a :href="'#restaurant/' + id" :name="'restaurant-' + id"
-                  class="button restaurantRow" style="color: white;">Show Times
+                  class="button restaurantRow" style="color: white;" v-if="!$route.params.id">Show Times
                 </a>
+                <available-times-list v-else :availableTimes="availableTimes"></available-times-list>
               </div>
               <div class="reservationForm"></div>
           </div>
@@ -27,8 +28,24 @@
 </template>
 
 <script>
+import AvailableTimesList from './AvailableTimesList.vue'
+
 export default {
   name: 'restaurant',
+  data () {
+    return {
+      availableTimes: []
+    }
+  },
+  created () {
+    if (this.$route.params.id) {
+      this.fetchRestaurant(this.$route.params.id)
+      this.fetchReservations(this.$route.params.id)
+    }
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
   props: [
     'name',
     'tagline',
@@ -37,7 +54,22 @@ export default {
     'address',
     'description',
     'id'
-  ]
+  ],
+  components: { AvailableTimesList },
+  methods: {
+    fetchReservations (id) {
+      return fetch('/restaurants/' + id + '/reservations').then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+
+        throw new Error(response.status + ' ' + response.statusText)
+      }).then((json) => {
+        const reservations = json
+        this.availableTimes = reservations.available
+      })
+    }
+  }
 }
 </script>
 
