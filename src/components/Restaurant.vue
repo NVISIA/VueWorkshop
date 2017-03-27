@@ -20,9 +20,10 @@
                 <a :href="'#restaurant/' + id" :name="'restaurant-' + id"
                   class="button restaurantRow" style="color: white;" v-if="!$route.params.id">Show Times
                 </a>
-                <available-times-list v-else :availableTimes="availableTimes"></available-times-list>
+                <available-times-list v-else :availableTimes="availableTimes"
+                  @selectTime="selectTime"></available-times-list>
               </div>
-              <reservation-form v-if="selectedTime"></reservation-form>
+              <reservation-form v-if="selectedTime" :time="selectedTime"></reservation-form>
           </div>
       </div>
     </div>
@@ -93,6 +94,9 @@ export default {
         const reservations = json
         this.availableTimes = reservations.available
       })
+    },
+    selectTime (time) {
+      this.selectedTime = time
     }
   }
 }

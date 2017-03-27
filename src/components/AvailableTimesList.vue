@@ -4,7 +4,9 @@
           <legend>Available Times</legend>
 
           <div class="row">
-              <div class="large-3 medium-4 small-6 columns availableTime" :value="availableTime" v-for="availableTime in availableTimes">
+              <div class="large-3 medium-4 small-6 columns availableTime"
+                :value="availableTime" @click="selectTime(availableTime)"
+                v-for="availableTime in availableTimes">
                   {{ showTime(availableTime) }}
               </div>
           </div>
@@ -24,7 +26,12 @@ export default {
   },
   props: [
     'availableTimes'
-  ]
+  ],
+  methods: {
+    selectTime (time) {
+      this.$emit('selectTime', time)
+    }
+  }
 }
 </script>
 

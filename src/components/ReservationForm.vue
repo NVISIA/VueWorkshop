@@ -2,7 +2,6 @@
   <div class="row">
       <div class="large-12 columns">
           <div class="panel">
-              <h5>The reservation form:</h5>
               <form>
                   <div class="row">
                       <div class="large-6 columns">
@@ -72,7 +71,10 @@ export default {
     return {
       showTime: showTime
     }
-  }
+  },
+  props: [
+    'time'
+  ]
 }
 </script>
 

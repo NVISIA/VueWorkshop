@@ -23,10 +23,10 @@
           <div class="panel">
               <h5>There is so much more!</h5>
 
-              <p>This is but one example with Backbone, there is so much more possible!</p>
-              <a href="http://backbonejs.org/#Events" class="small button">Go to Backbone.js Docs</a>
+              <p>This is but one example with Vue, there is so much more possible!</p>
+              <a href="https://vuejs.org" class="small button">Go to Backbone.js Docs</a>
           </div>
-      </div>      
+      </div>
     </div>
   </div>
 </template>
