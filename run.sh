@@ -8,7 +8,6 @@ PORT=9000
 DB_FILE="node_modules/workshop-server/data/restaurants.db"
 RESET_SCRIPT="./reset.sh"
 
-#
 # Install node deps
 npm install
 
